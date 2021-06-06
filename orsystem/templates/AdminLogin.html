@@ -56,7 +56,13 @@
             background-size:100%;
             }
             </style>
-            
+            <div>
+              {% for message in messages %}
+              {% if message.tags %} 
+              {% endif %}
+              <h4>{{ message }}</h4>
+              {% endfor %}
+            </div>
           
           <div class="wrap-input100 validate-input" data-validate = "Enter username">
             {% csrf_token %}
