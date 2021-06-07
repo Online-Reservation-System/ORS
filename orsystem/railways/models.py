@@ -6,3 +6,13 @@ class Admin(models.Model):
     username=models.CharField(max_length=50)
     password=models.CharField(max_length=50)
 
+class Train(models.Model):
+    trainid = models.CharField(max_length=5,primary_key=True)
+    trainname = models.CharField(max_length=100)
+    source = models.CharField(max_length=100)
+    destination = models.CharField(max_length=100)
+    starttime = models.DateTimeField()
+    endtime = models.DateTimeField()
+    totalseats = models.IntegerField()
+    filled = models.IntegerField()
+    status = models.CharField(max_length=20)

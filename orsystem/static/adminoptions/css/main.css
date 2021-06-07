@@ -166,9 +166,9 @@ iframe {
 }
 
 .wrap-table100 {
-  width: 1170px;
+  width: 1370px;
   margin-top:2px;
-  margin-right:300px;
+  margin-right:200px;
   margin-bottom:200px;
   
 }
@@ -177,7 +177,7 @@ table {
   border-spacing: 1;
   border-collapse: collapse;
   background:white;
-  opacity: 0.8;
+  opacity: 0.95;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
@@ -246,26 +246,31 @@ tbody tr:hover {
 }
 
 .column2 {
-  width: 160px;
+  width: 460px;
+
 }
 
 .column3 {
-  width: 245px;
+  width: 500px;
+
 }
 
 .column4 {
-  width: 110px;
-  text-align: right;
+  
+  width: 465px;
+  
+  
 }
 
 .column5 {
-  width: 170px;
-  text-align: right;
+  
+  width: 370px;
+  text-align: center;
 }
 
 .column6 {
   width: 222px;
-  text-align: right;
+  text-align: center;
   padding-right: 62px;
 }
 

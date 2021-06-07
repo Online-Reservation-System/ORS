@@ -5,6 +5,7 @@ from . import views
 urlpatterns=[
     path('',views.Welcome,name="Welcome"),
     path('AdminLogin',views.AdminLogin,name="AdminLogin"),
-    path('AdminOptions',views.AdminOptions,name="AdminOptions")
+    path('AdminOptions',views.AdminOptions,name="AdminOptions"),
+    path('AddAdmin',views.AddAdmin,name="AddAdmin")
     
 ]
