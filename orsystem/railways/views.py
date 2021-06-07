@@ -14,7 +14,7 @@ def AdminLogin(request):
         for user in Admin_cred:
             if username==user.username:
                 if password==user.password:
-                    return render(request,"AdminOptions.html")
+                    return render(request,"AdminOptions.html",{"name":user.name})
                 else:
                     messages.add_message(request, messages.INFO, 'Invalid credentials')
 

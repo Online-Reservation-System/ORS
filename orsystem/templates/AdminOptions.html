@@ -23,6 +23,14 @@
 
 </head>
 <body>
+	<div class="topnav" id="myTopnav">
+		<a href="#" class="active">Home</a>
+		<a href="#">Update Trains</a>
+		<a href="#">Cancel Tickets</a>
+		<a href="#">Logout</a>
+		<a href='#' id='nameofuser'>{{name}}</a>
+	  </div>
+	  
     <style>
         .container-table100{
             
@@ -39,12 +47,12 @@
 					<table>
 						<thead>
 							<tr class="table100-head">
-								<th class="column1">Date</th>
-								<th class="column2">Order ID</th>
+								<th class="column1">Start Time</th>
+								<th class="column2">Train ID</th>
 								<th class="column3">Name</th>
-								<th class="column4">Price</th>
-								<th class="column5">Quantity</th>
-								<th class="column6">Total</th>
+								<th class="column4">Source</th>
+								<th class="column5">Destination</th>
+								<th class="column6">Avaialable Seats</th>
 							</tr>
 						</thead>
 						<tbody>
