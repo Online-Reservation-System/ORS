@@ -16,3 +16,9 @@ class Train(models.Model):
     totalseats = models.IntegerField()
     filled = models.IntegerField()
     status = models.CharField(max_length=20)
+class Ticket(models.Model):
+    ticket_id = models.CharField(max_length=10,primary_key=True)
+    trainid = models.ForeignKey(Train, verbose_name="TrainID", on_delete=models.CASCADE)
+    passanger_name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20)
+    

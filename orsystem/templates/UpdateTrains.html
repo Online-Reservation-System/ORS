@@ -1,0 +1,82 @@
+{% load static %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+		<meta charset="utf-8">
+		<title>Update Trains</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	</head>
+  	<body class="body">
+ 		<br>
+    	<h1 class="col-md-12 text-center" style="color:white ">Update Trains</h1>
+   		<br>
+    	<div class="mytable col-md-10">
+		<style>
+		.body{
+				background-image: url("{% static 'images/homepic.jpg' %}");
+				background-repeat:no-repeat;
+				background-size:100%;
+				}
+		.tbody1{
+			background-color:whitesmoke;
+		}
+		.head1{
+			background-color:whitesmoke;
+		}
+		.mytable
+		{
+			width:100%;
+		}
+		
+		</style>
+		<table class="table-bordered table-striped table-hover table-condensed  text-center" id="DyanmicTable">
+			<thead class="head1">
+				<tr>
+					<th class="text-center">Train id</th>
+					<th class="text-center">Train Name</th>
+					<th class="text-center">status</th>
+					<th class="text-center">Source</th>
+					<th class="text-center">Destination</th>
+					<th class="text-center">Start Time</th>
+					<th class="text-center">Reach Time</th>
+					<th class="text-center">Total Seats</th>
+					<th class="text-center" button id="addNewRow" class="btn btn-primary btn-sm">Filled</button></th>
+				</tr>
+			</thead>
+			<tbody class="tbody1">
+				{% for Train in Train_data %}
+				<tr>
+					<form method="POST">
+					{% csrf_token %}
+					<td class="column1"><input type="text"  style="width:65px;" name="trainid" value="{{Train.trainid}}" ></td>
+					<td class="column2"><input type="text" name="trainname" value="{{Train.trainname}}"></td>
+					<td class="column2"><input type="text" style="width:100px;" name="status" value="{{Train.status}}"></td>
+					<td class="column5"><input type="text"  name="source" value="{{Train.source}}"></td>
+					<td class="column6"><input type="text" name="destination" value="{{Train.destination}}"></td>
+					<td class="column3"><input type="datetime-local" name="starttime" value="{{Train.starttime|date:'Y-m-d'}}T{{Train.starttime|time:'H:i:s'}}"></td>
+					<td class="column4"><input type="datetime-local" name="endtime" value="{{Train.endtime|date:'Y-m-d'}}T{{Train.endtime|time:'H:i:s'}}"></td>
+					<td class="column6"><input type="number" value="{{ Train.totalseats}}"></td>
+					<td class="column6"><input type="number" value="{{ Train.filled}}"></td>
+					<td><input type = submit name="Confirm Changes"></td>
+				
+				</tr>
+					
+				{% endfor %}
+				
+			</form>
+			</tbody>
+			
+		</table>
+
+
+<!--JS Files-->
+<!-- <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script> -->
+<script src="{% static 'updatetrains/bootstable.min.js' %}"></script>
+<script>
+ $('#DyanmicTable').SetEditable({ $addButton: $('#addNewRow')});
+</script>
+</body>
+</html>

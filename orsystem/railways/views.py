@@ -22,6 +22,33 @@ def AdminLogin(request):
     return render(request,"AdminLogin.html")
 def AdminOptions(request):
     return render(request,"AdminOptions.html")
+
+def UpdateTrains(request):
+    Train_data = Train.objects.all().order_by("starttime")
+    if request.method=='POST':
+        id=request.POST["trainid"]
+        name=request.POST["trainname"]
+        status=request.POST["status"]
+        source=request.POST["source"]
+        dest=request.POST["destination"]
+        start=request.POST["starttime"]
+        end=request.POST["endtime"]
+        totalseats=request.POST.get("totalseats")
+        filled=request.POST.get("filled")
+        print(id,name,status,source,dest,start,end,totalseats,filled)
+        if totalseats!=None and filled!=None:
+            train=Train.objects.get(trainid=id)
+            train.trainid=id
+            train.trainname=name
+            train.status=status
+            train.source=source
+            train.destination=dest
+            train.starttime=start
+            train.endtime=end
+            train.totalseats=totalseats
+            train.filled=filled
+            train.save()
+    return render(request,"UpdateTrains.html",{"Train_data":Train_data})
 def AddAdmin(request):
     if request.method=='POST':
         passwd = request.POST['password']
