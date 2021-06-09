@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth,User
 from .models import Admin,Train
 from django.contrib import messages
+from .forms import updateTrainsForm
+from django.forms import formset_factory
 
 # Create your views here.
 def Welcome(request):
@@ -21,7 +23,8 @@ def AdminLogin(request):
 
     return render(request,"AdminLogin.html")
 def AdminOptions(request):
-    return render(request,"AdminOptions.html")
+    Train_data = Train.objects.all().order_by("starttime")
+    return render(request,"AdminOptions.html",{"Train_data":Train_data})
 
 def UpdateTrains(request):
     Train_data = Train.objects.all().order_by("starttime")
@@ -35,20 +38,36 @@ def UpdateTrains(request):
         end=request.POST["endtime"]
         totalseats=request.POST.get("totalseats")
         filled=request.POST.get("filled")
-        print(id,name,status,source,dest,start,end,totalseats,filled)
+        
         if totalseats!=None and filled!=None:
-            train=Train.objects.get(trainid=id)
-            train.trainid=id
-            train.trainname=name
-            train.status=status
-            train.source=source
-            train.destination=dest
-            train.starttime=start
-            train.endtime=end
-            train.totalseats=totalseats
-            train.filled=filled
-            train.save()
+            try:
+                train=Train.objects.get(trainid=id)
+                train.trainid=id
+                train.trainname=name
+                train.status=status
+                train.source=source
+                train.destination=dest
+                train.starttime=start
+                train.endtime=end
+                train.totalseats=totalseats
+                train.filled=filled
+                train.save()
+            except:
+                train=Train()
+                train.trainid=id
+                train.trainname=name
+                train.status=status
+                train.source=source
+                train.destination=dest
+                train.starttime=start
+                train.endtime=end
+                train.totalseats=totalseats
+                train.filled=filled
+                train.save()
+
+        
     return render(request,"UpdateTrains.html",{"Train_data":Train_data})
+
 def AddAdmin(request):
     if request.method=='POST':
         passwd = request.POST['password']
@@ -66,3 +85,4 @@ def AddAdmin(request):
             messages.add_message(request, messages.INFO, 'Password missmatch!!')
 
     return render(request,"AddAdmin.html")
+

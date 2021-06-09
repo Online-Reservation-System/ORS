@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -5,14 +6,14 @@
   <title>Add Admin</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<!--===============================================================================================-->  
     <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico/' %}">
-	
-
+  
+<!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
-
+<!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
-
+<!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css'%}">
 <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css'%}">
@@ -28,11 +29,21 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/util.css'%}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}">
 <!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/util.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/main.css' %}">
 
 
 
 </head>
 <body>
+  <div class="topnav" id="myTopnav">
+    <a href="{% url 'AdminOptions' %}">Home</a>
+    <a href="" class="active">Add Admin</a>
+    <a href="{% url 'UpdateTrains' %}">Update Trains</a>
+    <a href="{% url 'UpdateTrains' %}">Update Timings</a>
+    <a href="{% url 'Welcome' %}">Logout</a>
+    <a href='#' id='nameofuser'>{{name}}</a>
+    </div>
   
   <div class="limiter">
     <div class="container-login100">
@@ -44,9 +55,10 @@
             <i class="zmdi zmdi-landscape"></i>
           </span>
 
-          <span class="login100-form-title p-b-34 p-t-27">
+<span class="login100-form-title p-b-34 p-t-27">
             Add Admin
           </span>
+          
           
            <style>
             .container-login100

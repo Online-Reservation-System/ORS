@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Table V01</title>
+	<title>Admin</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,8 +28,9 @@
 		<a href="#" class="active">Home</a>
 		<a href="{% url 'AddAdmin' %}">Add Admin</a>
 		<a href="{% url 'UpdateTrains' %}">Update Trains</a>
-		<a href="#">Cancel Tickets</a>
-		<a href="#">Logout</a>
+		<a href="{% url 'Welcome' %}">Logout</a>
+		
+		
 		<a href='#' id='nameofuser'>{{name}}</a>
 	  </div>
 	  

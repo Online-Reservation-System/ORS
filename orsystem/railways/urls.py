@@ -7,6 +7,8 @@ urlpatterns=[
     path('AdminLogin',views.AdminLogin,name="AdminLogin"),
     path('AdminOptions',views.AdminOptions,name="AdminOptions"),
     path('AddAdmin',views.AddAdmin,name="AddAdmin"),
-    path('UpdateTrains',views.UpdateTrains,name="UpdateTrains")
+    path('UpdateTrains',views.UpdateTrains,name="UpdateTrains"),
+    
+
     
 ]
