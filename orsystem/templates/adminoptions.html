@@ -1,0 +1,97 @@
+
+{% load static %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Table V01</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/png" href="{% static 'adminoptions/images/icons/favicon.ico' %}"/>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/vendor/bootstrap/css/bootstrap.min.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/vendor/animate/animate.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/vendor/select2/select2.min.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/util.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/main.css' %}">
+
+</head>
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="#" class="active">Home</a>
+    <a href="{% url 'addadmin' %}">Add Admin</a>
+    <a href="{% url 'updatetrains' %}">Update Trains</a>
+    <a href="{% url 'updatetrains' %}">Update Timings</a>
+    <a href="{% url 'welcome' %}">Logout</a>
+    <a href='#' id='nameofuser'>{{name}}</a>
+    </div>
+    
+    <style>
+        .container-table100{
+            
+            background-image: url("{% static 'images/bg.jpg' %}");
+            background-repeat:no-repeat;
+            background-size:100%;
+        }
+    </style>
+  
+  <div class="limiter">
+    <div class="container-table100">
+      <div class="wrap-table100">
+        <div class="table100">
+          <table>
+            <thead>
+              <tr class="table100-head">
+                <th class="column1">Train ID</th>
+                <th class="column2">Train Name</th>
+                <th class="column3">Start Time</th>
+                <th class="column4">Reach Time</th>
+                <th class="column5">Source</th>
+                <th class="column6">Destination</th>
+                <th class="column6">Available Seats</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for Train in Train_data %}
+                <tr>
+                  <td class="column1">{{Train.trainid}}</td>
+                  <td class="column2">{{Train.trainname}}</td>
+                  <td class="column3">{{Train.starttime}}</td>
+                  <td class="column4">{{Train.endtime}}</td>
+                  <td class="column5">{{Train.source}}</td>
+                  <td class="column6">{{Train.destination}}</td>
+                  <td class="column6">{{ Train.totalseats|sub:Train.filled }}</td>
+                </tr>
+              {% endfor %}
+                
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+
+  <script src="{% static 'adminoptions/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+
+  <script src="{% static 'adminoptions/vendor/bootstrap/js/popper.js' %}"></script>
+  <script src="{% static 'adminoptions/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'adminoptions/vendor/select2/select2.min.js' %}"></script>
+
+  <script src="{% static 'adminoptions/js/main.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    
+    <meta charset="utf-8">
+    <title>Online Reservation</title>
+    <link rel="stylesheet" href="{%static 'style.css' %}">
+    
+    
+    <section id='header'>
+        <h1 >Online Reservation System</h1>
+    </section>
+  </head>
+  <body class="body">
+     <style>
+         .body{
+                background-image: url("{%static 'images/bg.jpg'%}");
+                background-repeat: no-repeat;
+                background-position: center;
+                width:100%;
+                height:500px;
+                background-size: cover;
+         }
+     </style>
+      
+    <div class="middle">
+    
+      <a href="" class="btn btn1" >User</a>
+      <a href="{% url 'adminlogin' %}" class ="btn btn2">Admin</a>.
+      
+    
+      
+    </div>
+  </body>
+  
+</html>
