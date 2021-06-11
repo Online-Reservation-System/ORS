@@ -1,7 +1,7 @@
 from django.core.checks import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth,User
-from .models import Admin,Train
+from .models import Admin, AppUser,Train
 from django.contrib import messages
 
 # Create your views here.
@@ -91,4 +91,55 @@ def updatetrains(request):
 
         print("Submitteeddd!!!")
     return render(request,"UpdateTrains.html",{"Train_data":Train_data})
+#-------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------
+def useroptions(request):
+    return render(request,"useroptions.html")
+#-----------------------------------------------------------------------------------    
+def userregister(request):
+    if request.method=='POST':
+        email=request.POST["email"]
+        try:
+            email = AppUser.objects.get(email=email)
+            if email!=None:
+                 messages.add_message(request, messages.INFO, 'Email already exists!!')
+        except:
+            try:
+                username=request.POST["username"]
+                username = AppUser.objects.get(username=username)
+                if username!=None:
+                    messages.add_message(request, messages.INFO, 'Username taken!!')
+            except:
+                password=request.POST["password"]
+                confpassword=request.POST["confirmpassword"]
+                if password==confpassword:
+                    user=AppUser()
+                    user.name=request.POST["name"]
+                    user.username=request.POST["username"]
+                    user.password=password
+                    user.email=request.POST["email"]
+                    user.phone=request.POST["phonenumber"]
+                    user.save()
+                    messages.add_message(request, messages.INFO, 'User Registered!! Login now')
+
+                else:
+                    messages.add_message(request, messages.INFO, 'password missmatch!!')
+    return render(request,"userregister.html")
+        
+def userlogin(request):
+    if request.method=="POST":
+        username = request.POST["username"]
+        passwd = request.POST["password"]
+        try:
+            user = AppUser.objects.get(username=username)
+            if user!=None:
+                if user.username==username and user.password==passwd:
+                    return render(request,"welcome.html")
+                else:
+                    messages.add_message(request, messages.INFO, 'Invalid credentials')
+        except:
+            messages.add_message(request, messages.INFO,"Your account doesn't exist.")
+    return render(request,"userlogin.html")
     
+

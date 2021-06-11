@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap',
     'fontawesome',
-    'railways.apps.RailwaysConfig'
+    'railways.apps.RailwaysConfig',
 ]
 INSTALLED_APPS+=('mathfilters',)
 
