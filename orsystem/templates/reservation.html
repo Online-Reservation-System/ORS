@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation</title>
+    <style> body {
+        background-image:url("{%static 'C:\Users\hp\projects\railway\static\ORSProject.jpg' %}");
+        background-repeat:none;
+        background-size: cover;
+        
+    }
+    </style>
+    <style>
+        a:link, a:visited{
+            background-color: violet;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-blocka;
+
+        }
+    </style>
+    <style>
+        a:active, a:hover{
+            background-color: red;
+        }
+    </style>
+    <style>
+        h1{
+            text-align: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            color: tomato;
+        }
+    </style>
+    <style>
+        input[type=text],
+        input[type=number]{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0px;
+            box-sizing: border-box;
+            background-color: lightblue;
+        }
+    </style>
+    <style>
+        input[type=button]{
+            background-color: green;
+            color:white;
+            padding: 16px 32px;
+        }
+    </style>
+   
+
+    <style>
+        label{
+            background-color:none;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-align: left;
+            color: orangered;
+            font-size: x-large;
+
+        }
+    </style>
+    <style>
+        div{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reserve Your Ticket</h1><br><hr>
+    <a href="{% url 'trainlist' %}">Home</a>
+    <a href="{% url 'booktickets'%}">Book Tickets</a>
+    <a href="{% url 'previousbookings' %}">Show Booked Tickets</a>
+    <a href="#" >Log Out</a>
+    <hr>
+    <div> 
+        <form>
+            <label for="trainid">Train ID :</label>
+            <input type="text" id="trainid" name="trainid"><br>
+            <label for="departure">Departure :</label>
+            <input type="text" id="departure" name="departure"><br>
+            <label for="destination">Destination :</label>
+            <input type="text" id="destination" name=destination><br>
+            <label for="seats">No.of Seats :</label>
+            <input type="number" id="seats" name="seats"><br>
+            <a href="{% url 'payment' %}"><input type="button"  value="Proceed to Pay"></a>
+        </form>
+    </div>
+
+    
+</body>
+</html>

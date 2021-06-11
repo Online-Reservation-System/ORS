@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth,User
-from .models import Admin,Train
+from .models import Admin,Train,AppUser
 from django.contrib import messages
 from .forms import updateTrainsForm
 from django.forms import formset_factory
@@ -86,3 +86,60 @@ def AddAdmin(request):
 
     return render(request,"AddAdmin.html")
 
+def UserLogin(request):
+    if request.method=="POST":
+        username = request.POST["username"]
+        passwd = request.POST["password"]
+        print(username,passwd)
+        try:
+            user = AppUser.objects.get(username=username)
+            if user!=None:
+                if user.username==username and user.password==passwd:
+                    Traindata = Train.objects.filter(status="Running")
+                    return render(request,"Trainlist.html",{"Traindata":Traindata})
+                else:
+                    messages.add_message(request, messages.INFO, 'Invalid credentials')
+        except Exception as e:
+            print(e)
+            messages.add_message(request, messages.INFO,"Your account doesn't exist.")
+
+        return render(request,"UserLogin.html")
+
+    else:
+        return render(request,"UserLogin.html")
+
+
+def UserRegister(request):
+    if request.method=='POST':
+        try:
+            email=request.POST['email']
+            user = AppUser.objects.get(email=email)
+            if user!=None:
+                messages.add_message(request,messages.INFO,"Email already exists!")
+        except:
+            try:
+                username = request.POST["username"]
+                user = AppUser.objects.get(username=username)
+                if user!=None:
+                    messages.add_message(request,messages.INFO,"Username Already Taken!")
+            except:
+                password=request.POST["password"]
+                confpassword=request.POST["confirmpassword"]
+                if password==confpassword:
+                    user=AppUser()
+                    user.name=request.POST["name"]
+                    user.username=request.POST["username"]
+                    user.password=password
+                    user.email=request.POST["email"]
+                    user.phone=request.POST["phonenumber"]
+                    user.save()
+                    messages.add_message(request, messages.INFO, 'User Registered!! Login now')
+                else:
+                    messages.add_message(request, messages.INFO, 'Password missmatch!!')
+
+    return render(request,"UserRegistration.html")
+
+
+def Trainlist(request):
+        Traindata = Train.objects.filter(status="Running")
+        return render(request,"Trainlist.html",{"Traindata":Traindata})
