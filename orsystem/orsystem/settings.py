@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!6@6p(#j^q293sn7bl(0*m-(39o0x4h7a*z@tt2c^pqi4i^j*6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',]
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS += ('mathfilters', )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -133,3 +134,8 @@ STATIC_ROOT=os.path.join(BASE_DIR,'assets')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+PAYTM_MERCHANT_ID = '<your_merchant_id>'
+PAYTM_SECRET_KEY = '<your_paytm_secret_key>'
+PAYTM_WEBSITE = 'WEBSTAGING'
+PAYTM_CHANNEL_ID = 'WEB'
+PAYTM_INDUSTRY_TYPE_ID = 'Retail'

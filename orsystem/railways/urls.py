@@ -12,6 +12,9 @@ urlpatterns=[
     path('UserLogin',views.UserLogin,name="UserLogin"),
     path('UserRegister',views.UserRegister,name="UserRegister"),
     path('Trainlist',views.Trainlist,name="Trainlist"),
+    path("BookTickets.html",views.BookTickets,name="BookTickets"),
+    path("Payment.html",views.initiate_payment,name="Payment"),
+    path("callback",views.callback,name="callback"),
 
     
 ]

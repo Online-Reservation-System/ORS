@@ -1,117 +1,24 @@
-
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Payment Form </title>
-    <link rel="stylesheet" href="style.css">
-    <style> body {
-        background-image:url("{%static 'C:\Users\hp\projects\railway\static\ORSProject.jpg' %}");
-        background-repeat:none;
-        background-size: cover;
-        
-    }
-    </style>
-    <style>
-        a:link, a:visited{
-            background-color: violet;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-blocka;
 
-        }
-    </style>
-    <style>
-        a:hover, a:active{
-            background-color: red;
-        }
-    </style>
-    <style>
-        h1{
-            text-align: center;
-            font-family:Georgia, 'Times New Roman', Times, serif;
-            color: tomato;
-        }
-    </style>
-    <style>
-        h3{
-            text-align: left;
-            font-family:Georgia, 'Times New Roman', Times, serif;
-            color: tomato;
-        }
-    </style>
-    <style>
-        input[type='button']{
-            background-color: green;
-            color:white;
-            padding: 10px 10px;
-        }
-    </style>
+<head>
+    <title>Payment Home</title>
 </head>
+
 <body>
-    <h1>Payment</h1><br><hr>
-    <a href="{% url 'trainlist' %}">Home</a>
-    <a href="{% url 'booktickets' %}">Book Tickets</a>
-    <a href="{% url 'previousbookings' %}">Show Booked Tickets</a>
-    <a href="#" >Log Out</a>
-    <hr>
-    <div class="container">
-        <h1>Confirm Your Payment</h1>
-        <div class="first-row">
-            <div class="owner">
-                <h3>Name On Card</h3>
-                <div class="input-field">
-                    <input type="text">
-                </div>
-            </div>
-            <div class="cvv">
-                <h3>cvv</h3>
-                <div class="input-field">
-                    <input type="password">
-                </div>
-            </div>    
-        </div>
-        <div class="second-row">
-            <div class="Card-Number">
-                <h3>Card Number</h3>
-                <div class="input-field">
-                    <input type="text">
-                </div>
-            </div>
-        </div>
-        <div class="third-row">
-                <h3>Expiry month on Card</h3>
-                <div class="select ion">
-                    <div class="date"></div>
-                       <select name="months">
-                           <option value="Jan">Jan</option>
-                           <option value="Feb">Feb</option>
-                           <option value="Mar">Mar</option>
-                           <option value="Apr">Apr</option>
-                           <option value="May">May</option>
-                           <option value="Jun">Jun</option>
-                           <option value="Jul">Jul</option>
-                           <option value="Aug">aug</option>
-                           <option value="Sep">Sep</option>
-                           <option value="Oct">Oct</option>
-                           <option value="Nov">Nov</option>
-                           <option value="Dec">Dec</option>
-                        </select>
-                        <select name="months" id="years">
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                        </select>
-                </div>
-            </div>    
-        </div>
-    </div><br><br>
-    <input type="button" value='pay'>
+    <h2>Payment Home</h2>
+    {% if error %}
+    <h3>{{ error }}</h3>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username: </label>
+        <input type="text" name="username" required>
+        <label for="password">Password: </label>
+        <input type="text" name="password" required>
+        <label for="amount">Amount: </label>
+        <input type="number" name="amount" value="100">
+        <input type="submit" name="submit" value="Submit" required>
+    </form>
 </body>
+
 </html>
