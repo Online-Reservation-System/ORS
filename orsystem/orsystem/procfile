@@ -1,1 +1,0 @@
-web: gunicorn orsystem.wsgi --log-file -
