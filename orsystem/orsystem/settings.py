@@ -81,10 +81,11 @@ WSGI_APPLICATION = 'orsystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'orsystem',
-        'USER':'postgres',
-        'PASSWORD':'1234',
-        'HOST':'localhost'
+        'NAME': 'postgres',
+        'USER':'zdxvcblesqccmc',
+        'PASSWORD':'60d2ac4c5674be0863c6cf38aa6e3defa599908dd78b2243d7583e8f06dacd87',
+        'HOST':'ec2-54-73-147-133.eu-west-1.compute.amazonaws.com',
+        'PORT':'5432'
     }
 }
 
