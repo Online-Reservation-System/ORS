@@ -12,6 +12,7 @@ urlpatterns=[
     path('UserLogin',views.UserLogin,name="UserLogin"),
     path('UserRegister',views.UserRegister,name="UserRegister"),
     path('Trainlist',views.Trainlist,name="Trainlist"),
-
+    path("BookTickets",views.BookTickets,name="BookTickets"),
+    path('Payment',views.Payment,name="Payments"),
     
 ]
