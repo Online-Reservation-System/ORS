@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Payment Form </title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet">
     <style> body {
-        background-image:url("{%static 'C:\Users\hp\projects\railway\static\ORSProject.jpg' %}");
+        background-image:url("{%static 'images/homepic.jpg' %}");
         background-repeat:none;
         background-size: cover;
         
@@ -15,7 +15,7 @@
     </style>
     <style>
         a:link, a:visited{
-            background-color: violet;
+            background-color:violet;
             color: white;
             padding: 10px 20px;
             text-align: center;
@@ -27,6 +27,9 @@
     <style>
         a:hover, a:active{
             background-color: red;
+        }
+        .firstrow{
+            margin-left:2cm;
         }
     </style>
     <style>
@@ -40,53 +43,94 @@
         h3{
             text-align: left;
             font-family:Georgia, 'Times New Roman', Times, serif;
-            color: tomato;
+            color:white;
         }
     </style>
     <style>
-        input[type='button']{
-            background-color: green;
-            color:white;
+        input[type='submit']{
+            background-color: white;
+            color:red;
+            margin-top: 1cm;
+            margin-right: 1.9cm;
+            border-radius: 12px;
             padding: 10px 10px;
         }
+        .container{
+            background-color: rgb(89, 114, 128);
+            width:35%;
+
+            margin-left: 13cm;
+            margin-top: 4cm;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 12px;
+        }
+        .box{
+            margin-left: 1cm;
+            width:50%
+        }
+        .image{
+            margin-left: .5cm;
+            width:1%;
+            height:0.5mm;
+            
+        }
+        
     </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/util.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/main.css' %}">
+
 </head>
 <body>
-    <h1>Payment</h1><br><hr>
-    <a href="{% url 'trainlist' %}">Home</a>
-    <a href="{% url 'booktickets' %}">Book Tickets</a>
-    <a href="{% url 'previousbookings' %}">Show Booked Tickets</a>
-    <a href="#" >Log Out</a>
-    <hr>
-    <div class="container">
-        <h1>Confirm Your Payment</h1>
+    <br>
+    <br>
+    <h1 style="color:whitesmoke">Payment</h1><br>
+    <br>
+    
+    <a href="{% url 'Trainlist' %}">Home</a>
+    <a href="#">Book Tickets</a>
+    <a href="#">Show Booked Tickets</a>
+    <a href="#">Cancel Tickets</a>
+    <a href="{% url 'Welcome' %}" >Log Out</a>
+    <br>
+    <br>
+
+
+<div class="container">
+        <div class="box">
         <div class="first-row">
-            <div class="owner">
+        <div class="owner">
+            <br>
+            <form action="Payment" method="POST">
+                {% csrf_token  %}
                 <h3>Name On Card</h3>
                 <div class="input-field">
-                    <input type="text">
+                    <input type="text" style="width:6cm;height:0.7cm;">
                 </div>
             </div>
+            <br>
             <div class="cvv">
                 <h3>cvv</h3>
                 <div class="input-field">
-                    <input type="password">
+                    <input type="password" style="width:6cm;height:0.7cm;">
                 </div>
             </div>    
         </div>
+        <br>
         <div class="second-row">
             <div class="Card-Number">
                 <h3>Card Number</h3>
                 <div class="input-field">
-                    <input type="text">
+                    <input type="text" style="width:6cm;height:0.7cm;">
                 </div>
             </div>
         </div>
+        <br>
         <div class="third-row">
                 <h3>Expiry month on Card</h3>
                 <div class="select ion">
-                    <div class="date"></div>
-                       <select name="months">
+                    <div class="date" ></div>
+                       <select name="months"  style="width:3cm;height:0.7cm;">
                            <option value="Jan">Jan</option>
                            <option value="Feb">Feb</option>
                            <option value="Mar">Mar</option>
@@ -100,18 +144,34 @@
                            <option value="Nov">Nov</option>
                            <option value="Dec">Dec</option>
                         </select>
-                        <select name="months" id="years">
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
+                        <select name="months" id="years"  style="width:3cm;height:0.7cm;">
+
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
                         </select>
                 </div>
+                <br>
+
+                
+                <br>
+                <br>
+            </div>
+            
+            </div>
+            <div class="image">
+                <br>
+                <img src="{%static 'images/qr.png' %}"  alt="descriptive text">
+                <input type="submit" value="Pay"  style=" width:4.8cm;font-weight:bold;">
+            </form>
             </div>    
         </div>
+        
+        
     </div><br><br>
-    <input type="button" value='pay'>
+    
 </body>
 </html>

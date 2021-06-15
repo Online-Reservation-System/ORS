@@ -16,7 +16,7 @@ class Train(models.Model):
     totalseats = models.IntegerField()
     filled = models.IntegerField()
     status = models.CharField(max_length=20)
-
+    Ticketcost = models.IntegerField()
 class AppUser(models.Model):
     user_id  = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='UserID')
     name = models.CharField(max_length=30)
@@ -26,9 +26,17 @@ class AppUser(models.Model):
     phone=models.BigIntegerField()
 class Ticket(models.Model):
     ticket_id = models.CharField(max_length=10,primary_key=True)
-    trainid = models.ForeignKey(Train, verbose_name="TrainID", on_delete=models.CASCADE)
-    passanger_id = models.ForeignKey(AppUser,verbose_name="UserID",on_delete=models.CASCADE)
+    trainid = models.CharField(max_length=5)
+    journeydate = models.DateTimeField()
+    passanger_id = models.CharField(max_length=5)
     passanger_name = models.CharField(max_length=100)
     status = models.CharField(max_length=20)
     
+class Transaction(models.Model):
+    made_by = models.CharField(max_length=200)
+    made_on = models.DateTimeField(auto_now_add=True)
+    amount = models.BigIntegerField()
+    order_id = models.CharField(unique=True, max_length=100, null=True, blank=True)
+    
 
+    

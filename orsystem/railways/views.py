@@ -1,11 +1,20 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth,User
-from .models import Admin,Train,AppUser
+from .models import Admin,Train,AppUser,Transaction,Ticket
 from django.contrib import messages
-from django.forms import formset_factory
+from django.conf import settings
+import random
+import string  
+from django.utils import timezone
+import pandas as pd
 
 # Create your views here.
 def Welcome(request):
+    request.session['userid']=''
+    request.session['username']=''
+    request.session['trainid']=''
+    request.session['no_of_seats']=0
+    request.session['amount'] = 0
     return render(request,"Welcome.html")
 def AdminLogin(request):
     if request.method=='POST':
@@ -89,12 +98,13 @@ def UserLogin(request):
     if request.method=="POST":
         username = request.POST["username"]
         passwd = request.POST["password"]
-        print(username,passwd)
         try:
             user = AppUser.objects.get(username=username)
             if user!=None:
                 if user.username==username and user.password==passwd:
                     Traindata = Train.objects.filter(status="Running")
+                    request.session["userid"]=user.user_id
+                    request.session['username']=user.username
                     return render(request,"Trainlist.html",{"Traindata":Traindata})
                 else:
                     messages.add_message(request, messages.INFO, 'Invalid credentials')
@@ -139,57 +149,59 @@ def UserRegister(request):
     return render(request,"UserRegistration.html")
 
 
-    def Trainlist(request):
+def Trainlist(request):
         Traindata = Train.objects.filter(status="Running")
         return render(request,"Trainlist.html",{"Traindata":Traindata})
-        def BookTickets(request):
-        Traindata = Train.objects.filter(status="Running")
-        if request.method=="POST":
-            id=request.POST.get("trainid")
-            no_of_seats=request.POST.get("seats")
-            request.session['trainid']=id
-            request.session['seats']=no_of_seats
-            try:
-                print(request.session['trainid'])
-                Train_data=Train.objects.get(trainid=request.session["trainid"])
-                request.session['amount']=int(Train_data.Ticketcost) * int(no_of_seats)
-                return render(request,"Payment.html",{"Traindata":Train_data,"seats":no_of_seats})
-            except Exception as e:
-                print(e)
-                messages.add_message(request,messages.INFO,"Train Doesn't Exist!")
+def BookTickets(request):
+    Traindata = Train.objects.filter(status="Running")
+    if request.method=="POST":
+        id=request.POST.get("trainid")
+        no_of_seats=request.POST.get("seats")
+        request.session['trainid']=id
+        request.session['seats']=no_of_seats
+        try:
+            print(request.session['trainid'])
+            Train_data=Train.objects.get(trainid=request.session["trainid"])
+            request.session['amount']=int(Train_data.Ticketcost) * int(no_of_seats)
+            return render(request,"Payment.html",{"Traindata":Train_data,"seats":no_of_seats})
+        except Exception as e:
+            print(e)
+            messages.add_message(request,messages.INFO,"Train Doesn't Exist!")
 
 
     return render(request,"BookTickets.html",{"Traindata":Traindata})
-    def Payment(request):
+def Payment(request):
     #transaction object
-        if request.method=="POST":
+    if request.method=="POST":
 
-            randomstring_length = 5
+        randomstring_length = 5
+        ticketid = str(''.join(random.choices(string.ascii_uppercase + string.digits, k = randomstring_length)))
+
+        while ticketid in Ticket.objects.values_list('ticket_id', flat=True):
             ticketid = str(''.join(random.choices(string.ascii_uppercase + string.digits, k = randomstring_length)))
 
-            while ticketid in Ticket.objects.values_list('ticket_id', flat=True):
-                ticketid = str(''.join(random.choices(string.ascii_uppercase + string.digits, k = randomstring_length)))
+
+        newticket = Ticket()
+        newticket.ticket_id = ticketid
+        newticket.trainid = request.session["trainid"]
+        train = Train.objects.get(trainid=request.session["trainid"])
+        newticket.journeydate = train.starttime.strftime('%Y-%m-%d')
+        newticket.passanger_id = request.session['userid']
+        newticket.passanger_name = request.session['username']
+        newticket.status = "Booked"
+        newticket.save()
 
 
-            newticket = Ticket()
-            newticket.ticket_id = ticketid
-            newticket.trainid = request.session["trainid"]
-            train = Train.objects.get(trainid=request.session["trainid"])
-            newticket.journeydate = train.starttime.strftime('%Y-%m-%d')
-            newticket.passanger_id = request.session['userid']
-            newticket.passanger_name = request.session['username']
-            newticket.status = "Booked"
-            newticket.save()
-
-
-            trans = Transaction()
-            trans.made_by= request.session['username']
-            trans.made_on = timezone.now().strftime('%Y-%m-%d')
-            trans.amount = request.session['amount']
-            trans.order_id= str(request.session['userid'])+str(ticketid)
-            trans.save()
-            return render(request,"Payment.html",{"success":"Booked successfully!"})
-        return render(request,"Payment.html") 
+        trans = Transaction()
+        trans.made_by= request.session['username']
+        trans.made_on = timezone.now().strftime('%Y-%m-%d')
+        trans.amount = request.session['amount']
+        trans.order_id= str(request.session['userid'])+str(ticketid)
+        trans.save()
+        return render(request,"Payment.html",{"success":"Booked successfully!"})
+    return render(request,"Payment.html") 
     
     
+
+
 
