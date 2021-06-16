@@ -1,0 +1,115 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Bookings</title>
+    <style> body {
+        background-image:url("{%static 'images/homepic.jpg' %}");
+        background-repeat:none;
+        background-size: cover;
+        
+    }
+    .divform{
+        border:2px solid gray;
+        width:27%;
+        background-color:honeydew;
+        height:fit-content;
+        padding:5px;
+        margin-left:1cm;
+        border-radius:5px;
+    }
+    </style>
+    <style>
+        th {
+            background-color:green;
+            color: honeydew;
+        }
+    </style>
+    <style>
+        table {
+            width: 100%;
+            
+            text-align: center;
+        }
+    </style>
+    <style>
+        tr{
+            background-color:whitesmoke;
+        }
+    </style>
+    <style>
+        a:link, a:visited{
+            background-color: violet;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-blocka;
+
+        }
+    </style>
+    <style>
+        a:hover, a:active{
+            background-color: red;
+        }
+    </style>
+    <style>
+        h1{
+            text-align: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            color:white;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Your Reservations </h1><br>
+    <br>
+    <a href="{% url 'Trainlist' %}">Home</a>
+    <a href="{% url 'BookTickets' %}">Book Tickets</a>
+    <a href="{% url 'showbookedtickets' %}" class="active">Show Booked Tickets</a>
+    <a href="{% url 'CancelTickets' %}">Cancel Tickets</a>
+    <a href="{% url 'Welcome' %}" >Log Out</a>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <table>
+    <thead  style="color:white">
+        <tr>
+          <th class="text-center" height="40cm">Ticket_id</th>
+          <th class="text-center">Passanger_Name</th>
+          
+          <th class="text-center">Status_of_Ticket</th>
+          <th class="text-center">Passenger_id</th>
+          <th class="text-center">Train_id</th>
+          <th class="text-center">Journey_Date</th>
+        
+          
+          
+        </tr>
+      </thead>
+      <tbody >
+        {% for Tick in Tickets %}
+        <tr>
+          <td class="column1" height="50cm">{{Tick.ticket_id}}</td>
+          <td class="column2">{{Tick.passanger_name}}</td>
+          <td class="column5">{{Tick.status}}</td>
+          <td class="column6">{{Tick.passanger_id}}</td>
+          
+          <td class="column6">{{Tick.trainid}}</td>
+          <td class="column3">{{Tick.journeydate|date:'Y-m-d'}}</td>
+          
+        </tr>
+        {% endfor %}
+      </tbody>
+        
+    </table>
+    
+</body>
+</html>

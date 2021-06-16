@@ -1,5 +1,6 @@
 
 {% load static %}
+{% load mathfilters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     <link rel="stylesheet">
     <style> body {
         background-image:url("{%static 'images/homepic.jpg' %}");
-        background-repeat:none;
+        background-repeat:repeat;
         background-size: cover;
         
     }
@@ -75,6 +76,13 @@
             height:0.5mm;
             
         }
+        .msg{
+            text-align: center;
+            color:white;
+            margin-top: 4px;
+            font-weight:100px;
+            font-size: 5ch;
+        }
         
     </style>
     <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/util.css' %}">
@@ -88,15 +96,26 @@
     <br>
     
     <a href="{% url 'Trainlist' %}">Home</a>
-    <a href="#">Book Tickets</a>
-    <a href="#">Show Booked Tickets</a>
-    <a href="#">Cancel Tickets</a>
+    <a href="{% url 'BookTickets' %}">Book Tickets</a>
+    <a href="{% url 'showbookedtickets' %}">Show Booked Tickets</a>
+    <a href="{% url 'CancelTickets' %}">Cancel Tickets</a>
     <a href="{% url 'Welcome' %}" >Log Out</a>
     <br>
     <br>
-
+    
+    <div class="msg">
+        {% for message in messages %}
+        {% if message.tags %} 
+        {% endif %}
+        <h4>{{ message }}</h4>
+        {% endfor %}
+    </div>
 
 <div class="container">
+        
+            <h4 style="color:white ; margin-left:2cm ;margin-top:.5cm">  {{seats}} Tickets --- TicketCost {{Traindata.Ticketcost}} --- Total: {{seats | mul:Traindata.Ticketcost }}</h4> 
+        
+        
         <div class="box">
         <div class="first-row">
         <div class="owner">
@@ -164,8 +183,15 @@
             </div>
             <div class="image">
                 <br>
-                <img src="{%static 'images/qr.png' %}"  alt="descriptive text">
-                <input type="submit" value="Pay"  style=" width:4.8cm;font-weight:bold;">
+                
+                <img src="{%static 'images/qr.jpg' %}"  alt="descriptive text">
+                <br>
+                <br>
+                
+                <h4 style="color:white ; margin-left:1.8cm; ">Rs:{{seats |mul:Traindata.Ticketcost }}</h4> 
+                
+                <input type="submit" value="Pay"   style=" width:4.8cm;font-weight:bold;cursor:pointer">
+
             </form>
             </div>    
         </div>

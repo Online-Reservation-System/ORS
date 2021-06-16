@@ -6,7 +6,7 @@ from django.conf import settings
 import random
 import string  
 from django.utils import timezone
-import pandas as pd
+
 
 # Create your views here.
 def Welcome(request):
@@ -20,14 +20,18 @@ def AdminLogin(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
+        flag=0
         Admin_cred=Admin.objects.all()
         for user in Admin_cred:
-            if username==user.username:
-                if password==user.password:
-                    Train_data = Train.objects.all().order_by("starttime")
-                    return render(request,"AdminOptions.html",{"name":user.name,"Train_data":Train_data})
-                else:
-                    messages.add_message(request, messages.INFO, 'Invalid credentials')
+            if username==user.username and password==user.password:
+                flag=1
+                Train_data = Train.objects.all().order_by("starttime")
+                return render(request,"AdminOptions.html",{"name":user.name,"Train_data":Train_data})
+                    
+        if  flag==0:
+            messages.add_message(request, messages.INFO, 'Invalid credentials!!')
+    return render(request,"Adminlogin.html")
+
 
     return render(request,"AdminLogin.html")
 def AdminOptions(request):
@@ -46,6 +50,7 @@ def UpdateTrains(request):
         end=request.POST["endtime"]
         totalseats=request.POST.get("totalseats")
         filled=request.POST.get("filled")
+        cost = request.POST.get("cost")
         
         if totalseats!=None and filled!=None:
             try:
@@ -59,6 +64,7 @@ def UpdateTrains(request):
                 train.endtime=end
                 train.totalseats=totalseats
                 train.filled=filled
+                train.Ticketcost=cost
                 train.save()
             except:
                 train=Train()
@@ -71,6 +77,7 @@ def UpdateTrains(request):
                 train.endtime=end
                 train.totalseats=totalseats
                 train.filled=filled
+                train.Ticketcost = cost
                 train.save()
 
         
@@ -154,11 +161,12 @@ def Trainlist(request):
         return render(request,"Trainlist.html",{"Traindata":Traindata})
 def BookTickets(request):
     Traindata = Train.objects.filter(status="Running")
+
     if request.method=="POST":
         id=request.POST.get("trainid")
         no_of_seats=request.POST.get("seats")
         request.session['trainid']=id
-        request.session['seats']=no_of_seats
+        request.session['no_of_seats']=no_of_seats
         try:
             print(request.session['trainid'])
             Train_data=Train.objects.get(trainid=request.session["trainid"])
@@ -191,6 +199,14 @@ def Payment(request):
         newticket.status = "Booked"
         newticket.save()
 
+        train=Train.objects.get(trainid=request.session["trainid"])
+        print(train.filled)
+        train.filled=int(train.filled)+int(request.session['no_of_seats'])
+        print(request.session['no_of_seats'])
+        print(int(train.filled)+int(request.session['no_of_seats']))
+        print(train.filled)
+        train.save()
+
 
         trans = Transaction()
         trans.made_by= request.session['username']
@@ -198,10 +214,38 @@ def Payment(request):
         trans.amount = request.session['amount']
         trans.order_id= str(request.session['userid'])+str(ticketid)
         trans.save()
-        return render(request,"Payment.html",{"success":"Booked successfully!"})
+        messages.add_message(request,messages.INFO,"Booking Done!!")
+        return render(request,"Payment.html",{"Traindata":train,"seats":request.session['no_of_seats']})
+
     return render(request,"Payment.html") 
     
     
-
+def CancelTickets(request):
+    if request.method=="POST":
+        try:
+            ticketid = request.POST["ticketid"]
+            
+            tick = Ticket.objects.get(ticket_id=ticketid)
+            trainid = tick.trainid
+            train = Train.objects.get(trainid=trainid)
+            cost = train.Ticketcost
+            trans = Transaction.objects.get(order_id=str(request.session['userid'])+ticketid)
+            amount = trans.amount
+            if tick.status!="Cancelled":
+                train.filled -= amount//cost
+            tick.status="Cancelled"
+            tick.save() 
+            trans.delete()
+            train.save()
+            messages.add_message(request,messages.INFO,"Ticket has been cancelled. Amount will be refunded soon.")
+        except Exception as e:
+            print(e)
+            messages.add_message(request,messages.INFO,"Invalid Ticket ID")
+            
+    ticket_data = Ticket.objects.filter(passanger_id=request.session['userid'])
+    return render(request,"CancelTickets.html",{"Tickets":ticket_data})
+def showbookedtickets(request):
+    Tickets = Ticket.objects.filter(passanger_id=request.session['userid'])
+    return render(request,"showbookedtickets.html",{"Tickets":Tickets})
 
 

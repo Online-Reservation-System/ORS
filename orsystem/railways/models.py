@@ -25,7 +25,7 @@ class AppUser(models.Model):
     email = models.EmailField(max_length=50,unique=True)
     phone=models.BigIntegerField()
 class Ticket(models.Model):
-    ticket_id = models.CharField(max_length=10,primary_key=True)
+    ticket_id = models.CharField(max_length=5,primary_key=True)
     trainid = models.CharField(max_length=5)
     journeydate = models.DateTimeField()
     passanger_id = models.CharField(max_length=5)

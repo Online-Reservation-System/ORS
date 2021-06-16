@@ -14,5 +14,7 @@ urlpatterns=[
     path('Trainlist',views.Trainlist,name="Trainlist"),
     path("BookTickets",views.BookTickets,name="BookTickets"),
     path('Payment',views.Payment,name="Payments"),
+    path('CancelTickets',views.CancelTickets,name="CancelTickets"),
+    path("showbookedtickets",views.showbookedtickets,name="showbookedtickets"),
     
 ]
