@@ -1,0 +1,182 @@
+
+{% load static %}
+{%  load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation</title>
+    <style>
+        body {
+        background-image:url("{%static 'images/bg.jpg' %}");
+        background-repeat:none;
+        background-size: cover;
+        }
+        a:link, a:visited{
+            background-color: violet;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-blocka;
+
+        }
+        
+        h1{
+            text-align: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            color: tomato;
+        }
+        body{
+            background-image: url("{% static 'images/bg.jpg' %}");
+            background-repeat:no-repeat;
+            background-size:100%;
+            }
+        .tbody1{
+          background-color:whitesmoke;
+        }
+        .head1{
+          background-color:whitesmoke;
+        }
+        th {
+            background-color:green;
+            color: honeydew;
+        }
+        .mytable
+        {
+          width:100%;
+        }
+        .form
+        {
+          background-color: whitesmoke;
+          width:35%;
+        }
+        input[type=text],
+        input[type=number]{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0px;
+            box-sizing: border-box;
+            background-color: lightblue;
+        }
+        input[type=submit]{
+            background-color: green;
+            color:white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 10px 20px;
+        }
+        label{
+            background-color:none;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-align: left;
+            color:white;
+            font-size: x-large;
+
+        }
+        .content{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .tablediv{
+         width:50%;
+         margin-left: 2cm;
+        }
+        .divform{
+            border:2px solid gray;
+            width:27%;
+            background-color:honeydew;
+            height:fit-content;
+            padding:5px;
+            margin-left:1cm;
+            border-radius:5px;
+        }
+        #trainid
+        {
+          height:20px;
+          border-radius: 5px;
+        }
+        #seats
+        {
+          height:20px;
+          border-radius: 5px;
+        }
+    </style>
+</head>
+<body >
+  <h1 style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Reserve Your Ticket</h1><br>
+  <br>
+  <br>
+
+
+<a href="{% url 'trainslist' %}">Home</a>
+  <a href="{% url 'BookTickets' %}">Book Tickets</a>
+  <a href="{% url 'showbookedtickets' %}">Show Booked Tickets</a>
+  <a href="{% url 'CancelTickets' %}">Cancel Tickets</a>
+  <a href="{% url 'welcome' %}" >Log Out</a>
+  
+  <br>
+  <br>
+  <br>
+    <div class="content">
+    <div class="tablediv">
+    <table>
+        <thead  style="color:white" class="head1">
+          <tr>
+            <th class="text-center" height="40cm">Train id</th>
+            <th class="text-center">Train Name</th>
+            
+            <th class="text-center">Source</th>
+            <th class="text-center">Destination</th>
+            <th class="text-center">Start Time</th>
+            <th class="text-center">Reach Time</th>
+            <th class="text-center">Seats available</th>
+            <th class="text-center">Ticket Cost</th>
+            
+          </tr>
+        </thead>
+        <tbody class="tbody1" >
+          {% for Train in Traindata %}
+          <tr>
+            <td class="column1" height="50cm">{{Train.trainid}}</td>
+            <td class="column2">{{Train.trainname}}</td>
+            <td class="column5">{{Train.source}}</td>
+            <td class="column6">{{Train.destination}}</td>
+            <td class="column3" style="width:140px;padding:2px;">{{Train.starttime|date:'d-m-Y'}}||{{Train.starttime|time:'H:i'}}</td>
+            <td class="column3" style="width:140px;padding:2px;">{{Train.endtime|date:'d-m-Y'}}||{{Train.endtime|time:'H:i'}}</td>
+            <td class="column6">{{Train.totalseats|sub:Train.filled}}</td>
+            <td class="column7">{{Train.Ticketcost}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    <div  class="divform"> 
+      <h3 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;color:#3430A3">Book here</h3>
+      <hr>
+      {% for message in messages %}
+              {% if message.tags %} 
+              {% endif %}
+              <h4 style="color:red;font-family:Arial, Helvetica, sans-serif">{{ message }}</h4>
+              {% endfor %}
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label  style="color:black;font-weight:bold;font-size:15px;" > Train____ID:</label>
+            <input type="text" id="trainid" name="trainid" placeholder="Enter a valid train id" autofocus required><br>
+            <label style="color:black;font-weight:bold;font-size:15px;">JourneyDate</label>
+            <input type="date" id="seats" name="dates" placeholder="Journey Date" ><br>
+            <label style="color:black;font-weight:bold;font-size:15px;">No.of Seats:</label>
+            <input type="number" id="seats" name="seats" placeholder="Not more than 10 seats" required max="10"><br>
+            <input  type="submit"  value="Proceed to Pay">
+            
+            
+            
+        </form>
+    </div>
+    </div>
+
+    
+</body>
+</html>

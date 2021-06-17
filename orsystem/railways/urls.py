@@ -10,5 +10,12 @@ urlpatterns=[
             path("updatetrains",views.updatetrains,name="updatetrains"),
             path("userlogin",views.userlogin,name="userlogin"),
             path("useroptions",views.useroptions,name="useroptions"),
-            path("userregister",views.userregister,name="userregister")
+            path("userregister",views.userregister,name="userregister"),
+            path("trainslist",views.trainslist,name="trainslist"),
+            path("BookTickets",views.BookTickets,name="BookTickets"),
+            path("CancelTickets",views.CancelTickets,name="CancelTickets"),
+            path("Payment",views.Payment,name="Payment"),
+            path("showbookedtickets",views.showbookedtickets,name="showbookedtickets"),
+            
+            
             ]

@@ -36,7 +36,10 @@
 </head>
 <body>
  
-  
+  <div class="topnav" id="myTopnav">
+    <a href="{% url 'welcome' %}" class="active">Home</a>
+  </div>
+    
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100">
@@ -64,7 +67,8 @@
            <style>
             .container-login100
             {
-              background-image: url("{%static 'images/bg.jpg'%}");
+            height:30%;
+            background-image: url("{%static 'images/bg.jpg'%}");
             background-repeat:no-repeat;
             background-size:100%;
             }

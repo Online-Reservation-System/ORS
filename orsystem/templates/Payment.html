@@ -1,0 +1,202 @@
+
+{% load static %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Form </title>
+    <link rel="stylesheet" href="style.css">
+    <style> body {
+        background-image:url("{%static 'images/bg.jpg' %}");
+        background-repeat:none;
+        background-size: cover;
+        
+    }
+    </style>
+    <style>
+        a:link, a:visited{
+            background-color:violet;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-blocka;
+
+        }
+    </style>
+    <style>
+        a:hover, a:active{
+            background-color: red;
+        }
+        .firstrow{
+            margin-left:2cm;
+        }
+    </style>
+    <style>
+        h1{
+            text-align: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            color: tomato;
+        }
+    </style>
+    <style>
+        h3{
+            text-align: left;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            color:white;
+        }
+    </style>
+    <style>
+        input[type='submit']{
+            background-color: white;
+            color:red;
+            
+            margin-right: 1.9cm;
+            border-radius: 12px;
+            padding: 10px 10px;
+        }
+        .container{
+            background-color: rgb(89, 114, 128);
+            width:35%;
+
+            margin-left: 13cm;
+            
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 12px;
+        }
+        .box{
+            margin-left: 1cm;
+            width:50%
+        }
+        .image{
+            margin-left: .5cm;
+            width:1%;
+            height:0.5mm;
+            
+        }
+        .msg{
+            text-align: center;
+            color:red;
+            margin-top: 4cm;
+            font-weight:1000px;
+            font-size: 5ch;
+        }
+        
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/util.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'adminoptions/css/main.css' %}">
+
+</head>
+<body>
+    <br>
+    <br>
+    <h1 style="color:whitesmoke">Payment</h1><br>
+    <br>
+    
+    <a href="{% url 'trainslist' %}">Home</a>
+    <a href="{% url 'BookTickets' %}">Book Tickets</a>
+    <a href="{% url 'showbookedtickets' %}">Show Booked Tickets</a>
+    <a href="{% url 'CancelTickets' %}">Cancel Tickets</a>
+    <a href="{% url 'welcome' %}" >Log Out</a>
+    <br>
+    <br>
+    
+    <div class="msg">
+        {% for message in messages %}
+        {% if message.tags %} 
+        {% endif %}
+        <h4>{{ message }}</h4>
+        {% endfor %}
+      </div>
+    <div class="container">
+        
+        
+            <h4 style="color:white ; margin-left:2cm ;margin-top:.5cm">  {{seats}} Tickets --- TicketCost {{Traindata.Ticketcost}} --- Total: {{seats | mul:Traindata.Ticketcost }}</h4> 
+        
+        
+           
+        
+        <div class="box">
+        <div class="first-row">
+        <div class="owner">
+            <br>
+            <form action="Payment" method="POST">
+                {% csrf_token  %}
+            
+                <h3>Name On Card</h3>
+                <div class="input-field">
+                    <input type="text" name="nameoncard" style="width:6cm;height:0.7cm;">
+                </div>
+            </div>
+            <br>
+            <div class="cvv">
+                <h3>cvv</h3>
+                <div class="input-field">
+                    <input type="password" name="cvv" style="width:6cm;height:0.7cm;">
+                </div>
+            </div>    
+        </div>
+        <br>
+        <div class="second-row">
+            <div class="Card-Number">
+                <h3>Card Number</h3>
+                <div class="input-field">
+                    <input type="text" name="cardno" style="width:6cm;height:0.7cm;">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="third-row">
+                <h3>Expiry month on Card</h3>
+                <div class="select ion">
+                    <div class="date" ></div>
+                       <select name="months"   style="width:3cm;height:0.7cm;">
+                           <option value="Jan">Jan</option>
+                           <option value="Feb">Feb</option>
+                           <option value="Mar">Mar</option>
+                           <option value="Apr">Apr</option>
+                           <option value="May">May</option>
+                           <option value="Jun">Jun</option>
+                           <option value="Jul">Jul</option>
+                           <option value="Aug">aug</option>
+                           <option value="Sep">Sep</option>
+                           <option value="Oct">Oct</option>
+                           <option value="Nov">Nov</option>
+                           <option value="Dec">Dec</option>
+                        </select>
+                        <select name="years" id="years"  style="width:3cm;height:0.7cm;">
+
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                        </select>
+                </div>
+                <br>
+
+                
+                <br>
+                <br>
+            </div>
+            
+            </div>
+            <div class="image">
+                <br>
+                <img src="{%static 'images/qr.png' %}"  alt="descriptive text">
+                <br>
+                <br>
+                <h4 style="color:white ; margin-left:1.8cm; margin-top:.2cm">Rs:{{seats | mul:Traindata.Ticketcost }}</h4> 
+                <input type="submit" value="Pay" style=" width:4.8cm;font-weight:bold;">
+            </form>
+            </div>    
+        </div>
+        
+        
+    </div><br><br>
+    
+</body>
+</html>
