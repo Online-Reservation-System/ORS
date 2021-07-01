@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!6@6p(#j^q293sn7bl(0*m-(39o0x4h7a*z@tt2c^pqi4i^j*6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','railwaybooking.herokuapp.com/']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
