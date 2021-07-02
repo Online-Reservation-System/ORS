@@ -1,1 +1,1 @@
-web:gunicorn orsystem.wsgi
+web:gunicorn orsystem.wsgi --logfile-log-
