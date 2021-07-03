@@ -80,12 +80,11 @@ WSGI_APPLICATION = 'orsystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'orsystem',
         'USER':'postgres',
         'PASSWORD':'1234',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'HOST':'localhost'
     }
 }
 
